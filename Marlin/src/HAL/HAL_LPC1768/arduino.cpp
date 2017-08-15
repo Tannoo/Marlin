@@ -152,7 +152,7 @@ void analogWrite(int pin, int pwm_value) {  // 1 - 254: pwm_value, 0: LOW, 255: 
   if (!WITHIN(pin, 0, NUM_DIGITAL_PINS - 1) || pin_map[pin].port == 0xFF)
     return;
 
-  uint value = MAX(MIN(pwm_value, 255), 0);
+  uint8_t value = MAX(MIN(pwm_value, 255), 0);
   if (value == 0 || value == 255) {  // treat as digital pin
     LPC1768_PWM_detach_pin(pin);    // turn off PWM
     digitalWrite(pin, value);
