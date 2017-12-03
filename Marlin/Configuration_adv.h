@@ -490,6 +490,21 @@
 //#define LCD_TIMEOUT_TO_STATUS 15000
 
 /**
+ * LED illumination events
+ */
+#if ENABLED(PRINTER_EVENT_LEDS)
+  #define LED_HOMING        LEDColorYellow()
+  #define LED_LEVELING      LEDColorBlacklight()
+  #define LED_UBL_FILLIN    LEDColorRose()
+  #define LED_UBL_EDIT      LEDColorIndigo()
+  #define LED_UBL_LOAD      LEDColorOrange()
+  #define LED_UBL_SAVE      LEDColorOrange()
+  #define LED_PAUSED        LEDColorAmber()
+  #define LED_PAUSED_WAIT   LEDColorIndigo()
+  #define LED_PAUSE_TIMEOUT LEDColorIndigoLow()
+#endif
+
+/**
  * LED Control Menu
  * Enable this feature to add LED Control to the LCD menu
  */

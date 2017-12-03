@@ -40,8 +40,11 @@
   #include "../../../gcode/parser.h"
   #include "../../../feature/bedlevel/bedlevel.h"
   #include "../../../libs/least_squares_fit.h"
+  #include "../../../feature/Max7219_Debug_LEDs.h"
 
-#include "../../../feature/Max7219_Debug_LEDs.h"
+  #if ENABLED(PRINTER_EVENT_LEDS)
+    #include "../../leds/leds.h"
+  #endif
 
   #include <math.h>
 
@@ -308,7 +311,6 @@
    */
 
   void unified_bed_leveling::G29() {
-
     if (g29_parameter_parsing()) return; // abort if parsing the simple parameters causes a problem,
 
     // Check for commands that require the printer to be homed
@@ -420,6 +422,10 @@
             //
             // Invalidate Entire Mesh and Automatically Probe Mesh in areas that can be reached by the probe
             //
+            #ifdef LED_LEVELING
+              leds.set_color(LED_LEVELING);
+            #endif
+
             if (!parser.seen('C')) {
               invalidate();
               SERIAL_PROTOCOLLNPGM("Mesh invalidated. Probing mesh.");
@@ -494,6 +500,9 @@
            *   - Specify a constant with the 'C' parameter.
            *   - Allow 'G29 P3' to choose a 'reasonable' constant.
            */
+           #ifdef LED_UBL_FILLIN
+             leds.set_color(LED_UBL_FILLIN);
+           #endif
 
           if (g29_c_flag) {
             if (g29_repetition_cnt >= GRID_MAX_POINTS) {
@@ -543,6 +552,9 @@
         }
 
         case 4: // Fine Tune (i.e., Edit) the Mesh
+          #ifdef LED_UBL_EDIT
+            leds.set_color(LED_UBL_EDIT);
+          #endif
           #if ENABLED(NEWPANEL)
             fine_tune_mesh(g29_x_pos, g29_y_pos, parser.seen('T'));
           #else
@@ -576,6 +588,9 @@
     //
 
     if (parser.seen('L')) {     // Load Current Mesh Data
+      #ifdef LED_UBL_LOAD
+        leds.set_color(LED_UBL_LOAD);
+      #endif
       g29_storage_slot = parser.has_value() ? parser.value_int() : storage_slot;
 
       int16_t a = settings.calc_num_meshes();
@@ -602,6 +617,9 @@
     //
 
     if (parser.seen('S')) {     // Store (or Save) Current Mesh Data
+      #ifdef LED_UBL_SAVE
+        leds.set_color(LED_UBL_SAVE);
+      #endif
       g29_storage_slot = parser.has_value() ? parser.value_int() : storage_slot;
 
       if (g29_storage_slot == -1) {                     // Special case, we are going to 'Export' the mesh to the
@@ -640,6 +658,10 @@
     }
 
     if (parser.seen('T'))
+      #ifdef LED_LEVELING
+        leds.set_color(LED_LEVELING);
+      #endif
+
       display_map(g29_map_type);
 
     LEAVE:
@@ -651,10 +673,18 @@
       lcd_external_control = false;
     #endif
 
+    #if ENABLED(PRINTER_EVENT_LEDS)
+      leds.set_color(LEDColorOff());
+    #endif
+
     return;
   }
 
   void unified_bed_leveling::find_mean_mesh_height() {
+    #ifdef LED_UBL_EDIT
+      leds.set_color(LED_UBL_EDIT);
+    #endif
+
     float sum = 0.0;
     int n = 0;
     for (uint8_t x = 0; x < GRID_MAX_POINTS_X; x++)
@@ -693,6 +723,10 @@
   }
 
   void unified_bed_leveling::shift_mesh_height() {
+    #ifdef LED_UBL_EDIT
+      leds.set_color(LED_UBL_EDIT);
+    #endif
+
     for (uint8_t x = 0; x < GRID_MAX_POINTS_X; x++)
       for (uint8_t y = 0; y < GRID_MAX_POINTS_Y; y++)
         if (!isnan(z_values[x][y]))
@@ -1081,6 +1115,10 @@
    * good to have the extra information. Soon... we prune this to just a few items
    */
   void unified_bed_leveling::g29_what_command() {
+    #ifdef LED_LEVELING
+      leds.set_color(LED_LEVELING);
+    #endif
+
     report_state();
 
     if (storage_slot == -1)

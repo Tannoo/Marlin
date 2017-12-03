@@ -35,6 +35,10 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
+#if ENABLED(PRINTER_EVENT_LEDS)
+  #include "../../feature/leds/leds.h"
+#endif
+
 #include "../../lcd/ultralcd.h"
 
 #if ENABLED(QUICK_HOME)
@@ -138,6 +142,10 @@
  *
  */
 void GcodeSuite::G28(const bool always_home_all) {
+
+  #ifdef LED_HOMING
+    leds.set_color(LED_HOMING);
+  #endif
 
   #if ENABLED(DEBUG_LEVELING_FEATURE)
     if (DEBUGGING(LEVELING)) {
@@ -337,5 +345,9 @@ void GcodeSuite::G28(const bool always_home_all) {
 
   #if ENABLED(DEBUG_LEVELING_FEATURE)
     if (DEBUGGING(LEVELING)) SERIAL_ECHOLNPGM("<<< G28");
+  #endif
+
+  #if ENABLED(PRINTER_EVENT_LEDS)
+    leds.set_color(LEDColorOff());
   #endif
 }

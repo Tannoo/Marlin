@@ -117,14 +117,19 @@ typedef struct LEDColor {
   #define MakeLEDColor(R,G,B,W,I) LEDColor(R, G, B)
   #define LEDColorWhite() LEDColor(255, 255, 255)
 #endif
-#define LEDColorOff()     LEDColor(  0,   0,   0)
-#define LEDColorRed()     LEDColor(255,   0,   0)
-#define LEDColorOrange()  LEDColor(255,  80,   0)
-#define LEDColorYellow()  LEDColor(255, 255,   0)
-#define LEDColorGreen()   LEDColor(  0, 255,   0)
-#define LEDColorBlue()    LEDColor(  0,   0, 255)
-#define LEDColorIndigo()  LEDColor(  0, 255, 255)
-#define LEDColorViolet()  LEDColor(255,   0, 255)
+#define LEDColorOff()        LEDColor(  0,   0,   0)
+#define LEDColorRed()        LEDColor(255,   0,   0)
+#define LEDColorOrange()     LEDColor(255,  26,   0)
+#define LEDColorAmber()      LEDColor(255,  50,   0)
+#define LEDColorYellow()     LEDColor(255, 255,   0)
+#define LEDColorGreen()      LEDColor(  0, 255,   0)
+#define LEDColorBlue()       LEDColor(  0,   0, 255)
+#define LEDColorIndigo()     LEDColor(  0, 255, 255)
+#define LEDColorIndigoLow()  LEDColor(  0,  50,  50)
+#define LEDColorViolet()     LEDColor(255,   0, 255)
+#define LEDColorRose()       LEDColor(255,   0,  50)
+#define LEDColorWatermelon() LEDColor(255,  40,  50)
+#define LEDColorBlacklight() LEDColor(167,   0, 255)
 
 class LEDLights {
 public:

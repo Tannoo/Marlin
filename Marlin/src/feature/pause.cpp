@@ -41,6 +41,10 @@
   #include "../feature/fwretract.h"
 #endif
 
+#if ENABLED(PRINTER_EVENT_LEDS)
+  #include "../feature/leds/leds.h"
+#endif
+
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #include "../feature/runout.h"
 #endif
@@ -317,6 +321,10 @@ bool pause_print(const float &retract, const point_t &park_point, const float &u
   // Indicate that the printer is paused
   ++did_pause_print;
 
+  #ifdef LED_PAUSED
+    leds.set_color(LED_PAUSED);
+  #endif
+
   // Pause the print job and timer
   #if ENABLED(SDSUPPORT)
     if (card.sdprinting) {
@@ -359,6 +367,10 @@ bool pause_print(const float &retract, const point_t &park_point, const float &u
 void wait_for_filament_reload(const int8_t max_beep_count/*=0*/) {
   bool nozzle_timed_out = false;
 
+  #ifdef LED_PAUSED_WAIT
+    leds.set_color(LED_PAUSED_WAIT);
+  #endif
+
   #if ENABLED(ULTIPANEL)
     lcd_advanced_pause_show_message(ADVANCED_PAUSE_MESSAGE_INSERT);
   #endif
@@ -390,6 +402,10 @@ void wait_for_filament_reload(const int8_t max_beep_count/*=0*/) {
         nozzle_timed_out |= thermalManager.is_heater_idle(e);
 
     if (nozzle_timed_out) {
+      #ifdef LED_PAUSE_TIMEOUT
+        leds.set_color(LED_PAUSE_TIMEOUT);
+      #endif
+
       #if ENABLED(ULTIPANEL)
         lcd_advanced_pause_show_message(ADVANCED_PAUSE_MESSAGE_CLICK_TO_HEAT_NOZZLE);
       #endif
@@ -463,6 +479,10 @@ void wait_for_filament_reload(const int8_t max_beep_count/*=0*/) {
 void resume_print(const float &load_length/*=0*/, const float &purge_length/*=ADVANCED_PAUSE_EXTRUDE_LENGTH*/, const int8_t max_beep_count/*=0*/) {
   if (!did_pause_print) return;
 
+  #ifdef LED_PAUSED_WAIT
+    leds.set_color(LED_PAUSED_WAIT);
+  #endif
+
   // Re-enable the heaters if they timed out
   bool nozzle_timed_out = false;
   HOTEND_LOOP() {
@@ -520,6 +540,10 @@ void resume_print(const float &load_length/*=0*/, const float &purge_length/*=AD
       card.startFileprint();
       --did_pause_print;
     }
+  #endif
+
+  #if ENABLED(PRINTER_EVENT_LEDS)
+    leds.set_color(LEDColorOff());
   #endif
 }
 

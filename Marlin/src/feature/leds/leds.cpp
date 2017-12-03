@@ -122,6 +122,18 @@ void LEDLights::set_color(const LEDColor &incol
     lights_on = !incol.is_off();
     if (lights_on) color = incol;
   #endif
+
+  #if ENABLED(RGB_DEBUG)
+    SERIAL_ECHOPAIR("R: ", incol.r); SERIAL_ECHO(" | ");
+    SERIAL_ECHOPAIR("G: ", incol.g); SERIAL_ECHO(" | ");
+    SERIAL_ECHOPAIR("B: ", incol.b);
+    #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_LED)
+      SERIAL_ECHO(" | ");
+      SERIAL_ECHOLNPAIR("W: ", incol.w);
+    #else
+      SERIAL_EOL();
+    #endif
+  #endif
 }
 
 void LEDLights::set_white() {
