@@ -188,6 +188,7 @@
  * M405 - Enable Filament Sensor flow control. "M405 D<delay_cm>". (Requires FILAMENT_WIDTH_SENSOR)
  * M406 - Disable Filament Sensor flow control. (Requires FILAMENT_WIDTH_SENSOR)
  * M407 - Display measured filament diameter in millimeters. (Requires FILAMENT_WIDTH_SENSOR)
+ * M408 - Report JSON-style response.
  * M410 - Quickstop. Abort all planned moves.
  * M420 - Enable/Disable Leveling (with current values) S1=enable S0=disable (Requires MESH_BED_LEVELING or ABL)
  * M421 - Set a single Z coordinate in the Mesh Leveling grid. X<units> Y<units> Z<units> (Requires MESH_BED_LEVELING or AUTO_BED_LEVELING_UBL)
@@ -664,6 +665,10 @@ private:
     static void M405();
     static void M406();
     static void M407();
+  #endif
+
+  #if ENABLED(REPORT_M408_JSON)
+    static void M408();
   #endif
 
   #if HAS_LEVELING

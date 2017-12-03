@@ -590,6 +590,12 @@ void GcodeSuite::process_parsed_command() {
           break;
       #endif // FILAMENT_WIDTH_SENSOR
 
+      #if ENABLED(REPORT_M408_JSON)
+        case 408: // M408: Report JSON-style response
+          M408();
+        break;
+      #endif // REPORT_M408_JSON
+
       #if HAS_LEVELING
         case 420: // M420: Enable/Disable Bed Leveling
           M420();
