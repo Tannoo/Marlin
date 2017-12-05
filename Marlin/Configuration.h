@@ -1753,7 +1753,6 @@
   #define NEOPIXEL_PIXELS 60       // Number of LEDs in the strip
   //#define NEOPIXEL_IS_SEQUENTIAL // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS 255  // Initial brightness 0-255
-  #define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
 #endif
 
 /**
@@ -1770,6 +1769,7 @@
  */
 #if ENABLED(BLINKM) || ENABLED(RGB_LED) || ENABLED(RGBW_LED) || ENABLED(PCA9632) || ENABLED(NEOPIXEL_LED)
   #define PRINTER_EVENT_LEDS
+  #define LED_STARTUP_TEST // Cycle through LED colors at startup
 #endif
 
 /**

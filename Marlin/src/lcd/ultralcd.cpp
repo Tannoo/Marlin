@@ -4060,11 +4060,15 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM(function, MSG_SET_LEDS_WHITE, leds.set_white);
         MENU_ITEM(function, MSG_SET_LEDS_RED, leds.set_red);
         MENU_ITEM(function, MSG_SET_LEDS_ORANGE, leds.set_orange);
+        MENU_ITEM(function, MSG_SET_LEDS_AMBER, leds.set_amber);
         MENU_ITEM(function, MSG_SET_LEDS_YELLOW,leds.set_yellow);
         MENU_ITEM(function, MSG_SET_LEDS_GREEN, leds.set_green);
         MENU_ITEM(function, MSG_SET_LEDS_BLUE, leds.set_blue);
         MENU_ITEM(function, MSG_SET_LEDS_INDIGO, leds.set_indigo);
         MENU_ITEM(function, MSG_SET_LEDS_VIOLET, leds.set_violet);
+        MENU_ITEM(function, MSG_SET_LEDS_ROSE, leds.set_rose);
+        MENU_ITEM(function, MSG_SET_LEDS_WATERMELON, leds.set_watermelon);
+        MENU_ITEM(function, MSG_SET_LEDS_BLACKLIGHT, leds.set_blacklight);
         END_MENU();
       }
     #endif // LED_COLOR_PRESETS
@@ -4092,6 +4096,15 @@ void kill_screen(const char* lcd_msg) {
       else
         MENU_ITEM(function, MSG_LEDS_ON, leds.toggle);
       MENU_ITEM(function, MSG_SET_LEDS_DEFAULT, leds.set_default);
+      #if ENABLED(LED_STARTUP_TEST)
+        MENU_ITEM(function,
+          #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_LED) && NEOPIXEL_IS_RGBW
+            MSG_RGBW_TEST
+          #else
+            MSG_RGB_TEST
+          #endif
+          , leds.startup_test);
+      #endif
       #if ENABLED(LED_COLOR_PRESETS)
         MENU_ITEM(submenu, MSG_LED_PRESETS, lcd_led_presets_menu);
       #endif

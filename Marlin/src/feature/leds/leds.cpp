@@ -59,6 +59,9 @@ void LEDLights::setup() {
   #if ENABLED(NEOPIXEL_LED)
     setup_neopixel();
   #endif
+  #if ENABLED(LED_STARTUP_TEST)
+    leds.startup_test();
+  #endif
   #if ENABLED(LED_USER_PRESET_STARTUP)
     set_default();
   #endif
@@ -147,6 +150,64 @@ void LEDLights::set_white() {
 
 #if ENABLED(LED_CONTROL_MENU)
   void LEDLights::toggle() { if (lights_on) set_off(); else update(); }
+#endif
+
+#if ENABLED(LED_STARTUP_TEST)
+
+  int rgb[3];
+
+  void hsi_to_rgb(float h, float s, float i) {
+    uint8_t r, g, b;
+    float fcos = 1.047196667, fh1 = 2.09439, fh2 = 4.188787;
+    #define calc1 255 * i / 3 * (1 + s * cos(h) / cos(fcos - h))
+    #define calc2 255 * i / 3 * (1 + s * (1 - cos(h) / cos(fcos - h)))
+    #define calc3 255 * i / 3 * (1 - s);
+
+    if (h > 360) {
+      h = h - 360;
+    }
+    h = fmod(h, 360); // cycle h around to 0-360 degrees
+    h = 3.14159 * h / (int32_t)180; // Convert to radians.
+    s = s > 0 ? (s < 1 ? s : 1) : 0; // clamp s and i to interval [0,1]
+    i = i > 0 ? (i < 1 ? i : 1) : 0;
+
+    if (h < fh1)      { r = calc1; g = calc2; b = calc3; }
+    else if (h < fh2) { h = h - fh1; g = calc1; b = calc2; r = calc3; }
+    else              { h = h - fh2; b = calc1; r = calc2; g = calc3; }
+
+    rgb[0] = r;
+    rgb[1] = g;
+    rgb[2] = b;
+  }
+
+  void LEDLights::startup_test() {
+    for (uint8_t i = 0; i < 255; i++) { // Fade on Red
+      leds.set_color(LEDColor(i, 0, 0));
+      safe_delay(3);
+    }
+    for (uint16_t i = 0; i <= 360; i++) { // Color Wheel Cycle
+      hsi_to_rgb(i, 1, 1);
+      leds.set_color(LEDColor(rgb[0], rgb[1], rgb[2]));
+      safe_delay(7);
+    }
+    for (uint8_t i = 255; i > 0; i--) { // Fade off
+      leds.set_color(LEDColor(i, 0, 0));
+      safe_delay(3);
+    }
+
+    #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_LED) && NEOPIXEL_IS_RGBW
+      for (uint8_t i = 0; i < 255; i++) { // Fade on White
+        leds.set_color(LEDColor(0, 0, 0, i));
+        safe_delay(3);
+      }
+      for (uint8_t i = 255; i > 0; i--) { // Fade off
+        leds.set_color(LEDColor(0, 0, 0, i));
+        safe_delay(3);
+      }
+    #endif
+
+    leds.set_color(LEDColorOff()); // Turn LEDs off
+  }
 #endif
 
 #endif // HAS_COLOR_LEDS

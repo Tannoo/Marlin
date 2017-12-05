@@ -44,16 +44,6 @@ void setup_neopixel() {
   pixels.begin();
   pixels.show(); // initialize to all off
 
-  #if ENABLED(NEOPIXEL_STARTUP_TEST)
-    safe_delay(1000);
-    set_neopixel_color(pixels.Color(255, 0, 0, 0));  // red
-    safe_delay(1000);
-    set_neopixel_color(pixels.Color(0, 255, 0, 0));  // green
-    safe_delay(1000);
-    set_neopixel_color(pixels.Color(0, 0, 255, 0));  // blue
-    safe_delay(1000);
-  #endif
-
   #if ENABLED(LED_USER_PRESET_STARTUP)
     set_neopixel_color(pixels.Color(LED_USER_PRESET_RED, LED_USER_PRESET_GREEN, LED_USER_PRESET_BLUE, LED_USER_PRESET_WHITE));
   #else

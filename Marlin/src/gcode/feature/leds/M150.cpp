@@ -52,6 +52,10 @@ void GcodeSuite::M150() {
     parser.seen('W') ? (parser.has_value() ? parser.value_byte() : 255) : 0,
     parser.seen('P') ? (parser.has_value() ? parser.value_byte() : 255) : pixels.getBrightness()
   ));
+  #if ENABLED(LED_STARTUP_TEST)
+    if (parser.seen('S'))
+      leds.startup_test();
+  #endif
 }
 
 #endif // HAS_COLOR_LEDS

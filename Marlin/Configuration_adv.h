@@ -489,6 +489,10 @@
 // The timeout (in ms) to return to the status screen from sub-menus
 //#define LCD_TIMEOUT_TO_STATUS 15000
 
+#if HAS_COLOR_LEDS
+  #define LED_STARTUP_TEST
+#endif
+
 /**
  * LED illumination events
  */

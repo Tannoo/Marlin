@@ -379,6 +379,9 @@
 #ifndef MSG_SET_LEDS_ORANGE
   #define MSG_SET_LEDS_ORANGE                 _UxGT("Orange")
 #endif
+#ifndef MSG_SET_LEDS_AMBER
+  #define MSG_SET_LEDS_AMBER                  _UxGT("Amber")
+#endif
 #ifndef MSG_SET_LEDS_YELLOW
   #define MSG_SET_LEDS_YELLOW                 _UxGT("Yellow")
 #endif
@@ -394,11 +397,26 @@
 #ifndef MSG_SET_LEDS_VIOLET
   #define MSG_SET_LEDS_VIOLET                 _UxGT("Violet")
 #endif
+#ifndef MSG_SET_LEDS_ROSE
+  #define MSG_SET_LEDS_ROSE                   _UxGT("Rose")
+#endif
+#ifndef MSG_SET_LEDS_WATERMELON
+  #define MSG_SET_LEDS_WATERMELON             _UxGT("Watermelon")
+#endif
+#ifndef MSG_SET_LEDS_BLACKLIGHT
+  #define MSG_SET_LEDS_BLACKLIGHT             _UxGT("Blacklight")
+#endif
 #ifndef MSG_SET_LEDS_WHITE
   #define MSG_SET_LEDS_WHITE                  _UxGT("White")
 #endif
 #ifndef MSG_SET_LEDS_DEFAULT
   #define MSG_SET_LEDS_DEFAULT                _UxGT("Default")
+#endif
+#ifndef MSG_RGB_TEST
+  #define MSG_RGB_TEST                        _UxGT("RGB Test")
+#endif
+#ifndef MSG_RGBW_TEST
+  #define MSG_RGBW_TEST                       _UxGT("RGBW Test")
 #endif
 #ifndef MSG_CUSTOM_LEDS
   #define MSG_CUSTOM_LEDS                     _UxGT("Custom Lights")

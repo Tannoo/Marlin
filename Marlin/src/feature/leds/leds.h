@@ -136,6 +136,9 @@ public:
   LEDLights() {} // ctor
 
   static void setup(); // init()
+  #if ENABLED(LED_STARTUP_TEST)
+    static void startup_test();
+  #endif
 
   static void set_color(const LEDColor &color
     #if ENABLED(NEOPIXEL_LED)
@@ -167,13 +170,17 @@ public:
 
   #if ENABLED(LED_COLOR_PRESETS)
     static const LEDColor defaultLEDColor;
-    FORCE_INLINE static void set_default()  { set_color(defaultLEDColor); }
-    FORCE_INLINE static void set_red()      { set_color(LEDColorRed()); }
-    FORCE_INLINE static void set_orange()   { set_color(LEDColorOrange()); }
-    FORCE_INLINE static void set_yellow()   { set_color(LEDColorYellow()); }
-    FORCE_INLINE static void set_blue()     { set_color(LEDColorBlue()); }
-    FORCE_INLINE static void set_indigo()   { set_color(LEDColorIndigo()); }
-    FORCE_INLINE static void set_violet()   { set_color(LEDColorViolet()); }
+    FORCE_INLINE static void set_default()    { set_color(defaultLEDColor); }
+    FORCE_INLINE static void set_red()        { set_color(LEDColorRed()); }
+    FORCE_INLINE static void set_orange()     { set_color(LEDColorOrange()); }
+    FORCE_INLINE static void set_amber()      { set_color(LEDColorAmber()); }
+    FORCE_INLINE static void set_yellow()     { set_color(LEDColorYellow()); }
+    FORCE_INLINE static void set_blue()       { set_color(LEDColorBlue()); }
+    FORCE_INLINE static void set_indigo()     { set_color(LEDColorIndigo()); }
+    FORCE_INLINE static void set_violet()     { set_color(LEDColorViolet()); }
+    FORCE_INLINE static void set_rose()       { set_color(LEDColorRose()); }
+    FORCE_INLINE static void set_watermelon() { set_color(LEDColorWatermelon()); }
+    FORCE_INLINE static void set_blacklight() { set_color(LEDColorBlacklight()); }
   #endif
 
   #if ENABLED(LED_CONTROL_MENU)
