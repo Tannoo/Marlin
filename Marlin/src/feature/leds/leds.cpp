@@ -126,7 +126,7 @@ void LEDLights::set_color(const LEDColor &incol
     if (lights_on) color = incol;
   #endif
 
-  #if ENABLED(RGB_DEBUG)
+  #if ENABLED(DEBUG_LEDS_FEATURE)
     SERIAL_ECHOPAIR("R: ", incol.r); SERIAL_ECHO(" | ");
     SERIAL_ECHOPAIR("G: ", incol.g); SERIAL_ECHO(" | ");
     SERIAL_ECHOPAIR("B: ", incol.b);

@@ -491,7 +491,7 @@
 
 #if HAS_COLOR_LEDS
   #define LED_STARTUP_TEST
-  #define DEBUG_LEDS_FEATURE
+  //#define DEBUG_LEDS_FEATURE
   #define ALL_WHITE
 #endif
 
