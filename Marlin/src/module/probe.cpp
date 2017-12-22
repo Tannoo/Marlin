@@ -544,10 +544,11 @@ static float run_z_probe() {
     if (zprobe_zoffset < 0) z -= zprobe_zoffset;
 
     if (z < current_position[Z_AXIS]) {
-
-      // If we don't make it to the z position (i.e. the probe triggered), move up to make clearance for the probe
-      if (!do_probe_move(z, Z_PROBE_SPEED_FAST))
-        do_blocking_move_to_z(current_position[Z_AXIS] + Z_CLEARANCE_BETWEEN_PROBES, MMM_TO_MMS(Z_PROBE_SPEED_FAST));
+      #if DISABLED(FIX_MOUNTED_PROBE)
+        // If we don't make it to the z position (i.e. the probe triggered), move up to make clearance for the probe
+        if (!do_probe_move(z, Z_PROBE_SPEED_FAST))
+          do_blocking_move_to_z(current_position[Z_AXIS] + Z_CLEARANCE_BETWEEN_PROBES, MMM_TO_MMS(Z_PROBE_SPEED_FAST));
+      #endif
     }
   #endif
 
@@ -556,8 +557,14 @@ static float run_z_probe() {
     for (uint8_t p = MULTIPLE_PROBING + 1; --p;) {
   #endif
 
-      // Move down slowly to find bed, not too far
-      if (do_probe_move(-10, Z_PROBE_SPEED_SLOW)) return NAN;
+  // Move down to find bed, not too far
+  if (do_probe_move(-10,
+    #ifdef MULTIPLE_PROBING
+      Z_PROBE_SPEED_SLOW
+    #else
+      Z_PROBE_SPEED_FAST
+    #endif
+  )) return NAN;
 
   #if MULTIPLE_PROBING > 2
       probes_total += current_position[Z_AXIS];
