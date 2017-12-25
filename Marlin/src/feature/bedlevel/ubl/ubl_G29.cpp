@@ -596,7 +596,7 @@
       int16_t a = settings.calc_num_meshes();
 
       if (!a) {
-        SERIAL_PROTOCOLLNPGM("?EEPROM storage not available.");
+        SERIAL_PROTOCOLLNPGM(MSG_EEPROM_ERROR);
         return;
       }
 
@@ -609,7 +609,7 @@
       settings.load_mesh(g29_storage_slot);
       storage_slot = g29_storage_slot;
 
-      SERIAL_PROTOCOLLNPGM("Done.");
+      SERIAL_PROTOCOLLNPGM(MSG_UBL_DONE);
     }
 
     //
@@ -641,7 +641,7 @@
       int16_t a = settings.calc_num_meshes();
 
       if (!a) {
-        SERIAL_PROTOCOLLNPGM("?EEPROM storage not available.");
+        SERIAL_PROTOCOLLNPGM(MSG_EEPROM_ERROR);
         goto LEAVE;
       }
 
@@ -654,7 +654,7 @@
       settings.store_mesh(g29_storage_slot);
       storage_slot = g29_storage_slot;
 
-      SERIAL_PROTOCOLLNPGM("Done.");
+      SERIAL_PROTOCOLLNPGM(MSG_UBL_DONE);
     }
 
     if (parser.seen('T'))
@@ -668,7 +668,7 @@
 
     #if ENABLED(NEWPANEL)
       lcd_reset_alert_level();
-      LCD_MESSAGEPGM("");
+      LCD_MESSAGEPGM(MSG_LEVEL_BED_DONE);
       lcd_quick_feedback(true);
       lcd_external_control = false;
     #endif
@@ -1249,7 +1249,7 @@
     int16_t a = settings.calc_num_meshes();
 
     if (!a) {
-      SERIAL_PROTOCOLLNPGM("?EEPROM storage not available.");
+      SERIAL_PROTOCOLLNPGM(MSG_EEPROM_ERROR);
       return;
     }
 
@@ -1498,7 +1498,7 @@
       do_blocking_move_to(rx, ry, Z_CLEARANCE_BETWEEN_PROBES);
 
       LCD_MESSAGEPGM(MSG_UBL_DONE_EDITING_MESH);
-      SERIAL_ECHOLNPGM("Done Editing Mesh");
+      SERIAL_ECHOLNPGM(MSG_UBL_DONE_EDITING_MESH);
 
       if (lcd_map_control)
         lcd_goto_screen(_lcd_ubl_output_map_lcd);

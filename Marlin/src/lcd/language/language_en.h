@@ -339,6 +339,9 @@
 #ifndef MSG_UBL_SAVE_MESH
   #define MSG_UBL_SAVE_MESH                   _UxGT("Save Bed Mesh")
 #endif
+#ifndef MSG_UBL_DONE
+  #define MSG_UBL_DONE                        _UxGT("Done.")
+#endif
 #ifndef MSG_MESH_LOADED
   #define MSG_MESH_LOADED                     _UxGT("Mesh %i loaded")
 #endif
@@ -631,6 +634,9 @@
 #endif
 #ifndef MSG_INIT_EEPROM
   #define MSG_INIT_EEPROM                     _UxGT("Initialize EEPROM")
+#endif
+#ifndef MSG_EEPROM_ERROR
+  #define MSG_EEPROM_ERROR                    _UxGT("?EEPROM storage not available.")
 #endif
 #ifndef MSG_REFRESH
   #define MSG_REFRESH                         _UxGT("Refresh")
