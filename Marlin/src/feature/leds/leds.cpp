@@ -183,7 +183,7 @@ void LEDLights::set_white() {
   void LEDLights::startup_test() {
     for (uint8_t i = 0; i < 255; i++) { // Fade on Red
       leds.set_color(LEDColor(i, 0, 0));
-      safe_delay(3);
+      safe_delay(2);
     }
     for (uint16_t i = 0; i <= 360; i++) { // Color Wheel Cycle
       hsi_to_rgb(i, 1, 1);
@@ -192,17 +192,28 @@ void LEDLights::set_white() {
     }
     for (uint8_t i = 255; i > 0; i--) { // Fade off
       leds.set_color(LEDColor(i, 0, 0));
-      safe_delay(3);
+      safe_delay(2);
     }
 
     #if ENABLED(RGBW_LED) || ENABLED(NEOPIXEL_LED) && NEOPIXEL_IS_RGBW
-      for (uint8_t i = 0; i < 255; i++) { // Fade on White
-        leds.set_color(LEDColor(0, 0, 0, i));
-        safe_delay(3);
-      }
+      #if ENABLED(ALL_WHITE)
+        for (uint8_t i = 0; i < 255; i++) { // Fade on all White
+          leds.set_color(LEDColor(i, i, i, i));
+          safe_delay(2);
+        }
+      #else
+        for (uint8_t i = 0; i < 255; i++) { // Fade on White LED
+          leds.set_color(LEDColor(0, 0, 0, i));
+          safe_delay(2);
+        }
+      #endif
       for (uint8_t i = 255; i > 0; i--) { // Fade off
-        leds.set_color(LEDColor(0, 0, 0, i));
-        safe_delay(3);
+        #if ENABLED(ALL_WHITE)
+          leds.set_color(LEDColor(i, i, i, i));
+        #else
+          leds.set_color(LEDColor(0, 0, 0, i));
+        #endif
+        safe_delay(2);
       }
     #endif
 
